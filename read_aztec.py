@@ -2,10 +2,10 @@
 
 import binascii
 import sys
+import time
 import zlib
-import serial
-from time import sleep
 
+import serial
 
 PORT = '/dev/tty.usbmodem21143101'
 BAUDRATE = 115220
@@ -54,13 +54,12 @@ send_modify_command(scanner, "AISRDS", 1)
 send_modify_command(scanner, "AISILL", PHONE_OPTIMIZED)
 send_modify_command(scanner, "AISOMD1")
 
+data = b''
 decompressor = None
 
 while True:
     print("Waiting for scanner data...")
-    sleep(1)
-    data = b''
-    decompressor = zlib.decompressobj()
+    time.sleep(1)
     msg = scanner_read(scanner)
     if msg:
         print(f"Received {len(msg)} bytes from scanner: {binascii.hexlify(msg).decode()}")
@@ -76,8 +75,11 @@ while True:
                 print(str(exc))
                 sys.exit(-1)
             if decompressor.eof:
-                print("Decompressed data:", binascii.hexlify(data).decode())
-                print(f"Complete uncompressed message, size = {len(data)}")
+                print(f"Decompressed {len(data)} bytes of data:", binascii.hexlify(data).decode())
+                filename = "mtb.bin"
+                with open(filename, "wb") as output_file:
+                    output_file.write(data)
+                print(f"Output written to {filename}")
                 sys.exit(0)
             else:
                 print("Buffer now:", binascii.hexlify(data).decode())
