@@ -1,9 +1,9 @@
 [tool.poetry]
 name = "read-aztec"
 version = "0.0.0"
-description = ""
+description = "Read Aztec MTB from LSR110 scanner"
+license = "BSD-2-Clause"
 authors = ["Jakob Schlyter <jakob@kirei.se>"]
-readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
