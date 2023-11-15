@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "read-aztec"
+version = "0.0.0"
+description = ""
+authors = ["Jakob Schlyter <jakob@kirei.se>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pyserial = "^3.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
